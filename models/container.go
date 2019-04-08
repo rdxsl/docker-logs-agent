@@ -3,6 +3,7 @@ package models
 import (
 	"bytes"
 
+	"github.com/astaxie/beego"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"golang.org/x/net/context"
@@ -27,7 +28,7 @@ func GetLog(ContainerId string) (string, error) {
 
 func dockerContainerLogs(ContainerId string) (string, error) {
 	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.WithVersion("1.39"))
+	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
 		return "can't connect to docker api", err
 	}
