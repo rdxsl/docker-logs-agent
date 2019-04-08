@@ -2,3 +2,4 @@ docker-logs-agent
 debug
 bin
 swagger/*
+lastupdate.tmp
