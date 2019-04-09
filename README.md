@@ -8,7 +8,7 @@ make docker_image
 
 docker run --privileged -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 rdxsl/docker-logs-agent:$VERSION
 
-curl -X GET "http://localhost:7001/v1/container/logs/$containerID"
+curl -X GET "http://localhost:7001/v1/containers/$containerID/logs"
 ```
 
 ## Deploy
