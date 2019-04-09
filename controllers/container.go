@@ -16,7 +16,7 @@ type ContainerController struct {
 // @Param	containerId		path 	string	true		"the containerId you want to get"
 // @Success 200 {container} models.Container
 // @Failure 403 :containerID is empty
-// @router /logs/:containerId [get]
+// @router /:containerId/logs [get]
 func (o *ContainerController) Get() {
 	containerId := o.Ctx.Input.Param(":containerId")
 	if containerId != "" {
