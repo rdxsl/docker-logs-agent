@@ -14,13 +14,15 @@ type ContainerController struct {
 // @Title Get
 // @Description find object by objectid
 // @Param	containerId		path 	string	true		"the containerId you want to get"
+// @Param	tail		path 	string	false		"number of lines you want to get"
 // @Success 200 {container} models.Container
 // @Failure 403 :containerID is empty
-// @router /:containerId/logs [get]
+// @router /:containerId/logs/:tail [get]
 func (o *ContainerController) Get() {
 	containerId := o.Ctx.Input.Param(":containerId")
+	tail := o.Ctx.Input.Param(":tail")
 	if containerId != "" {
-		ob, err := models.GetLog(containerId)
+		ob, err := models.GetLog(containerId, tail)
 		if err != nil {
 			o.Data["json"] = err.Error()
 		} else {
