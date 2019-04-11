@@ -33,10 +33,7 @@ func dockerContainerLogs(containerID string, tail string) (string, error) {
 		return "can't connect to docker api", err
 	}
 
-	options := types.ContainerLogsOptions{
-		ShowStdout: true,
-		Tail:       tail,
-	}
+	options := types.ContainerLogsOptions{ShowStdout: true}
 	// Replace this ID with a container that really exists
 	out, err := cli.ContainerLogs(ctx, containerID, options)
 	if err != nil {
