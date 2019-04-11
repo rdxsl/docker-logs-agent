@@ -22,18 +22,21 @@ func init() {
 	Containers = make(map[string]*Container)
 }
 
-func GetLog(ContainerId string) (string, error) {
-	return dockerContainerLogs(ContainerId)
+func GetLog(ContainerId string, tail string) (string, error) {
+	return dockerContainerLogs(ContainerId, tail)
 }
 
-func dockerContainerLogs(ContainerId string) (string, error) {
+func dockerContainerLogs(ContainerId string, tail string) (string, error) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
 		return "can't connect to docker api", err
 	}
 
-	options := types.ContainerLogsOptions{ShowStdout: true}
+	options := types.ContainerLogsOptions{
+		ShowStdout: true,
+		Tail:       tail,
+	}
 	// Replace this ID with a container that really exists
 	out, err := cli.ContainerLogs(ctx, ContainerId, options)
 	if err != nil {
