@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/rdxsl/docker-logs-agent/models"
 
 	"github.com/astaxie/beego"
@@ -13,20 +15,30 @@ type ContainerController struct {
 
 // @Title Get
 // @Description find object by objectid
-// @Param	containerId		path 	string	true		"the containerId you want to get"
-// @Param	tail		path 	string	false		"number of lines you want to get"
+// @Param	containerID		path 	string	true		"the containerID you want to get"
+// @Param	tail		query 	string	false		"number of lines you want to get"
 // @Success 200 {container} models.Container
 // @Failure 403 :containerID is empty
-// @router /:containerId/logs/:tail [get]
+// @router /:containerID/logs/?tail= [get]
 func (o *ContainerController) Get() {
-	containerId := o.Ctx.Input.Param(":containerId")
-	tail := o.Ctx.Input.Param(":tail")
-	if containerId != "" {
-		ob, err := models.GetLog(containerId, tail)
+	containerID := o.Ctx.Input.Param(":containerID")
+	tail := o.GetString("tail")
+
+	if tail != "" {
+		i, err := strconv.Atoi(tail)
+		if err != nil || i < 0 {
+			o.Data["json"] = map[string]string{"err": "container logs tail query string needs to be integer greater than 0"}
+			o.ServeJSON()
+			return
+		}
+	}
+
+	if containerID != "" {
+		ob, err := models.GetLog(containerID, tail)
 		if err != nil {
 			o.Data["json"] = err.Error()
 		} else {
-			o.Data["json"] = map[string]string{"containerId": ob}
+			o.Data["json"] = map[string]string{"containerID": ob}
 		}
 	}
 	o.ServeJSON()
