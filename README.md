@@ -2,6 +2,12 @@
 
 Web wrapper to access docker logs via unix socket `/var/run/docker.sock`. Only use this in a secure network environment.
 
+## Versioning
+run the following command to add new version
+```
+git tag 1.1.X -m "add some message"
+```
+
 ## Testing
 ```
 make docker_image
