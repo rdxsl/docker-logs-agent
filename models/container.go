@@ -14,7 +14,7 @@ var (
 )
 
 type Container struct {
-	ContainerId string
+	containerID string
 	Logs        string
 }
 
@@ -22,11 +22,11 @@ func init() {
 	Containers = make(map[string]*Container)
 }
 
-func GetLog(ContainerId string) (string, error) {
-	return dockerContainerLogs(ContainerId)
+func GetLog(containerID string, tail string) (string, error) {
+	return dockerContainerLogs(containerID, tail)
 }
 
-func dockerContainerLogs(ContainerId string) (string, error) {
+func dockerContainerLogs(containerID string, tail string) (string, error) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
@@ -35,7 +35,7 @@ func dockerContainerLogs(ContainerId string) (string, error) {
 
 	options := types.ContainerLogsOptions{ShowStdout: true}
 	// Replace this ID with a container that really exists
-	out, err := cli.ContainerLogs(ctx, ContainerId, options)
+	out, err := cli.ContainerLogs(ctx, containerID, options)
 	if err != nil {
 		return "no such container", err
 	}

@@ -369,7 +369,7 @@ type UpdateConfig struct {
 type HostConfig struct {
 	// Applicable to all platforms
 	Binds           []string      // List of volume bindings for this container
-	ContainerIDFile string        // File (path) where the containerId is written
+	ContainerIDFile string        // File (path) where the containerID is written
 	LogConfig       LogConfig     // Configuration of the logs for this container
 	NetworkMode     NetworkMode   // Network mode to use for the container
 	PortBindings    nat.PortMap   // Port mapping between the exposed port (container) and the host
