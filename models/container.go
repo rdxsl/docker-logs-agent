@@ -9,17 +9,6 @@ import (
 	"golang.org/x/net/context"
 )
 
-// var (
-// 	Containers map[string]*Container
-// )
-//
-// type Container struct {
-// 	containerID string
-// 	Logs        []byte
-// }
-//
-// func init() {
-// }
 type Logs struct {
 	ContainerLog       containerLog       `json:"containerLog"`
 	Base64ContainerLog base64ContainerLog `json:"base64ContainerLog"`
