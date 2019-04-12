@@ -47,9 +47,8 @@ func dockerContainerLogs(containerID string, tail string) (Logs, error) {
 	}
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(out)
-	s := buf.Bytes()
 
-	l.Base64ContainerLog = base64ContainerLog{containerID, s}
+	l.Base64ContainerLog = base64ContainerLog{containerID, buf.Bytes()}
 	l.ContainerLog = containerLog{containerID, buf.String()}
 	return l, nil
 
