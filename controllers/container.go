@@ -38,7 +38,7 @@ func (o *ContainerController) Get() {
 		if err != nil {
 			o.Data["json"] = err.Error()
 		} else {
-			o.Data["json"] = map[string]string{"containerID": ob}
+			o.Data["json"] = ob
 		}
 	}
 	o.ServeJSON()
