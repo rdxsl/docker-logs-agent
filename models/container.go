@@ -2,10 +2,12 @@ package models
 
 import (
 	"bytes"
+	"io"
 
 	"github.com/astaxie/beego"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/stdcopy"
 	"golang.org/x/net/context"
 )
 
@@ -20,8 +22,8 @@ type containerLog struct {
 }
 
 type base64ContainerLog struct {
-	ContainerID string `json:"base64containerID"`
-	Base64Logs  []byte `json:"base64Logs"`
+	Base64containerID string `json:"base64containerID"`
+	Base64Logs        []byte `json:"base64Logs"`
 }
 
 func GetLog(containerID string, tail string) (Logs, error) {
@@ -38,17 +40,32 @@ func dockerContainerLogs(containerID string, tail string) (Logs, error) {
 
 	options := types.ContainerLogsOptions{
 		ShowStdout: true,
+		ShowStderr: true,
 		Tail:       tail,
 	}
-	// Replace this ID with a container that really exists
-	out, err := cli.ContainerLogs(ctx, containerID, options)
+	c, err := cli.ContainerInspect(ctx, containerID)
 	if err != nil {
 		return l, err
 	}
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(out)
 
-	l.Base64ContainerLog = base64ContainerLog{containerID, buf.Bytes()}
+	// Replace this ID with a container that really exists
+	reader, err := cli.ContainerLogs(ctx, c.ID, options)
+	if err != nil {
+		return l, err
+	}
+
+	defer reader.Close()
+
+	buf := new(bytes.Buffer)
+
+	if c.Config.Tty {
+		_, err = io.Copy(buf, reader)
+	} else {
+		_, err = stdcopy.StdCopy(buf, buf, reader)
+	}
+
+	buf.ReadFrom(reader)
+
 	l.ContainerLog = containerLog{containerID, buf.String()}
 	return l, nil
 
