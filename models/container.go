@@ -2,49 +2,71 @@ package models
 
 import (
 	"bytes"
+	"io"
 
 	"github.com/astaxie/beego"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/stdcopy"
 	"golang.org/x/net/context"
 )
 
-var (
-	Containers map[string]*Container
-)
-
-type Container struct {
-	containerID string
-	Logs        string
+type Logs struct {
+	ContainerLog       containerLog       `json:"containerLog"`
+	Base64ContainerLog base64ContainerLog `json:"base64ContainerLog"`
 }
 
-func init() {
-	Containers = make(map[string]*Container)
+type containerLog struct {
+	ContainerID string `json:"containerID"`
+	Logs        string `json:"Logs"`
 }
 
-func GetLog(containerID string, tail string) (string, error) {
+type base64ContainerLog struct {
+	Base64containerID string `json:"base64containerID"`
+	Base64Logs        []byte `json:"base64Logs"`
+}
+
+func GetLog(containerID string, tail string) (Logs, error) {
 	return dockerContainerLogs(containerID, tail)
 }
 
-func dockerContainerLogs(containerID string, tail string) (string, error) {
+func dockerContainerLogs(containerID string, tail string) (Logs, error) {
+	var l Logs
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
-		return "can't connect to docker api", err
+		return l, err
 	}
 
 	options := types.ContainerLogsOptions{
 		ShowStdout: true,
+		ShowStderr: true,
 		Tail:       tail,
 	}
-	// Replace this ID with a container that really exists
-	out, err := cli.ContainerLogs(ctx, containerID, options)
+	c, err := cli.ContainerInspect(ctx, containerID)
 	if err != nil {
-		return "no such container", err
+		return l, err
 	}
+
+	// Replace this ID with a container that really exists
+	reader, err := cli.ContainerLogs(ctx, c.ID, options)
+	if err != nil {
+		return l, err
+	}
+
+	defer reader.Close()
+
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(out)
-	s := buf.String()
-	return s, nil
+
+	if c.Config.Tty {
+		_, err = io.Copy(buf, reader)
+	} else {
+		_, err = stdcopy.StdCopy(buf, buf, reader)
+	}
+
+	buf.ReadFrom(reader)
+
+	l.ContainerLog = containerLog{containerID, buf.String()}
+	return l, nil
 
 }
