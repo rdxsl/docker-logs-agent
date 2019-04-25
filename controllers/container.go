@@ -15,13 +15,13 @@ type ContainerController struct {
 }
 
 // @Title Logs
-// @Description find object by objectid
+// @Description return logs by containerID
 // @Param	containerID		path 	string	true		"the containerID you want to get"
 // @Param	tail		query 	string	false		"number of lines you want to get"
 // @Success 200 {container} models.Container
 // @Failure 403 :containerID is empty
 // @router /:containerID/logs/?tail= [get]
-func (o *ContainerController) Logs() {
+func (o *ContainerController) Get() {
 	containerID := o.Ctx.Input.Param(":containerID")
 	tail := o.GetString("tail")
 
@@ -48,7 +48,7 @@ func (o *ContainerController) Logs() {
 // @Title Exec Post
 // @Description Exec a container
 // @Param	containerID		path 	string	true		"the containerID you want to run exec"
-// @Param	body		body 	models.Ddadv	true		"The object content"
+// @Param	body		body 	models.ExecCmd	true		"The object content"
 // @Success 200 {container} models.Container
 // @Failure 400 :containerID is empty or bad Exec Cmd Json
 // @Failure 409 :ExecCmd JSON can't be Unmarshaled
