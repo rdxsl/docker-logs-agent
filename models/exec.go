@@ -17,11 +17,12 @@ type ExecCmd struct {
 }
 
 type ExecResult struct {
-	ContainerID string `json:"ContainerID"`
-	Result      string `json:"Result"`
+	ContainerID string  `json:"ContainerID"`
+	ExecCmd     ExecCmd `json:"ExecCmd"`
+	ExecResult  string  `json:"ExecResult"`
 }
 
-func Exec(containerID string, Cmd1 ExecCmd) (execResult ExecResult, err error) {
+func Exec(containerID string, Cmd ExecCmd) (execResult ExecResult, err error) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
@@ -39,7 +40,7 @@ func Exec(containerID string, Cmd1 ExecCmd) (execResult ExecResult, err error) {
 		AttachStderr: true,
 		AttachStdin:  true,
 	}
-	cfg.Cmd = Cmd1.Cmd
+	cfg.Cmd = Cmd.Cmd
 	response, err := cli.ContainerExecCreate(ctx, containerID, *cfg)
 
 	if err != nil {
@@ -73,6 +74,7 @@ func Exec(containerID string, Cmd1 ExecCmd) (execResult ExecResult, err error) {
 		_, err = stdcopy.StdCopy(buf, buf, stream.Reader)
 	}
 	buf.ReadFrom(stream.Reader)
-	execResult.Result = buf.String()
+	execResult.ExecResult = buf.String()
+	execResult.ExecCmd = Cmd
 	return
 }
