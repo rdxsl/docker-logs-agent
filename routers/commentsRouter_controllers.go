@@ -18,7 +18,7 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"] = append(beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"],
         beego.ControllerComments{
-            Method: "Get",
+            Method: "Logs",
             Router: `/:containerID/logs/?tail=`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),

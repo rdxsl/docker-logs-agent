@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 
@@ -13,14 +14,14 @@ type ContainerController struct {
 	beego.Controller
 }
 
-// @Title Get
+// @Title Logs
 // @Description find object by objectid
 // @Param	containerID		path 	string	true		"the containerID you want to get"
 // @Param	tail		query 	string	false		"number of lines you want to get"
 // @Success 200 {container} models.Container
 // @Failure 403 :containerID is empty
 // @router /:containerID/logs/?tail= [get]
-func (o *ContainerController) Get() {
+func (o *ContainerController) Logs() {
 	containerID := o.Ctx.Input.Param(":containerID")
 	tail := o.GetString("tail")
 
@@ -49,14 +50,32 @@ func (o *ContainerController) Get() {
 // @Param	containerID		path 	string	true		"the containerID you want to run exec"
 // @Param	body		body 	models.Ddadv	true		"The object content"
 // @Success 200 {container} models.Container
-// @Failure 403 :containerID is empty
+// @Failure 400 :containerID is empty or bad Exec Cmd Json
+// @Failure 409 :ExecCmd JSON can't be Unmarshaled
 // @router /:containerID/exec [post]
 func (o *ContainerController) Exec() {
 	containerID := o.Ctx.Input.Param(":containerID")
 
-	if containerID != "" {
-		fmt.Println(containerID)
-		models.LogTest(containerID)
+	if containerID == "" {
+		o.Ctx.Output.SetStatus(400)
+		o.Data["json"] = map[string]string{"Error": "containerID can't be empty"}
+		o.ServeJSON()
+		return
 	}
+
+	var execCmd models.ExecCmd
+	err := json.Unmarshal(o.Ctx.Input.RequestBody, &execCmd)
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		o.Data["json"] = map[string]string{"Error": "Exec Cmd Json format wrong"}
+		o.ServeJSON()
+		return
+	}
+
+	fmt.Println(containerID)
+	execResult, err := models.Exec(containerID, execCmd)
+	// need to handle error
+	o.Data["json"] = execResult
 	o.ServeJSON()
+	return
 }

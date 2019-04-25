@@ -6,38 +6,30 @@ import (
 	"io"
 
 	"github.com/astaxie/beego"
-	"github.com/docker/cli/opts"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/stdcopy"
 	"golang.org/x/net/context"
 )
 
-type execOptions struct {
-	detachKeys  string
-	interactive bool
-	tty         bool
-	detach      bool
-	user        string
-	privileged  bool
-	env         opts.ListOpts
-	workdir     string
-	container   string
-	command     []string
+type ExecCmd struct {
+	Cmd []string `json:"Cmd"`
 }
 
-func newExecOptions() execOptions {
-	return execOptions{env: opts.NewListOpts(opts.ValidateEnv)}
+type ExecResult struct {
+	ContainerID string `json:"ContainerID"`
+	Result      string `json:"Result"`
 }
 
-func LogTest(containerID string) (err error) {
+func Exec(containerID string, Cmd1 ExecCmd) (execResult ExecResult, err error) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
 	if err != nil {
-		return err
+		return
 	}
 	c, err := cli.ContainerInspect(ctx, containerID)
-	fmt.Println("LogTest" + containerID)
+	// need to handle error
+	execResult.ContainerID = containerID
 
 	cfg := &types.ExecConfig{
 		Privileged:   true,
@@ -47,7 +39,7 @@ func LogTest(containerID string) (err error) {
 		AttachStderr: true,
 		AttachStdin:  true,
 	}
-	cfg.Cmd = []string{"pwd"}
+	cfg.Cmd = Cmd1.Cmd
 	response, err := cli.ContainerExecCreate(ctx, containerID, *cfg)
 
 	if err != nil {
@@ -81,6 +73,6 @@ func LogTest(containerID string) (err error) {
 		_, err = stdcopy.StdCopy(buf, buf, stream.Reader)
 	}
 	buf.ReadFrom(stream.Reader)
-	fmt.Println(buf.String())
+	execResult.Result = buf.String()
 	return
 }
