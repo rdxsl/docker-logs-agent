@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"strconv"
 
-	"github.com/rdxsl/docker-logs-agent/models"
-
 	"github.com/astaxie/beego"
+	"github.com/rdxsl/docker-logs-agent/models"
 )
 
 // Operations about Container
@@ -40,6 +40,23 @@ func (o *ContainerController) Get() {
 		} else {
 			o.Data["json"] = ob
 		}
+	}
+	o.ServeJSON()
+}
+
+// @Title Exec Post
+// @Description Exec a container
+// @Param	containerID		path 	string	true		"the containerID you want to run exec"
+// @Param	body		body 	models.Ddadv	true		"The object content"
+// @Success 200 {container} models.Container
+// @Failure 403 :containerID is empty
+// @router /:containerID/exec [post]
+func (o *ContainerController) Exec() {
+	containerID := o.Ctx.Input.Param(":containerID")
+
+	if containerID != "" {
+		fmt.Println(containerID)
+		models.LogTest(containerID)
 	}
 	o.ServeJSON()
 }

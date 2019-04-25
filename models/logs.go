@@ -12,18 +12,12 @@ import (
 )
 
 type Logs struct {
-	ContainerLog       containerLog       `json:"containerLog"`
-	Base64ContainerLog base64ContainerLog `json:"base64ContainerLog"`
+	ContainerLog containerLog `json:"containerLog"`
 }
 
 type containerLog struct {
 	ContainerID string `json:"containerID"`
 	Logs        string `json:"Logs"`
-}
-
-type base64ContainerLog struct {
-	Base64containerID string `json:"base64containerID"`
-	Base64Logs        []byte `json:"base64Logs"`
 }
 
 func GetLog(containerID string, tail string) (Logs, error) {
