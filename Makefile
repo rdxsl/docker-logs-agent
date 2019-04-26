@@ -22,6 +22,8 @@ build: clean $(ALL_EXECUTABLES)
 clean:
 	rm -rf bin/ pkg/ $(BINARY)
 
+devcert:
+	cd cicd; ./makecert.sh test@test.com
 # Run unittests
 test:
 	$(TEST_ENV_VARS) go test $(TEST_FLAGS) $(ALL_PACKAGES)

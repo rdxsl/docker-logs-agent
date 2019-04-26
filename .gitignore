@@ -3,4 +3,5 @@ debug
 bin
 swagger/*
 lastupdate.tmp
-conf/dev/cert/*
+conf/dev/certs/*
+conf/production/certs/*

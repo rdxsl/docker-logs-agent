@@ -29,7 +29,10 @@ func Exec(containerID string, Cmd ExecCmd) (execResult ExecResult, err error) {
 		return
 	}
 	c, err := cli.ContainerInspect(ctx, containerID)
-	// need to handle error
+	if err != nil {
+		err = fmt.Errorf("Error in container exec ContainerInspect: %v", err)
+		return
+	}
 	execResult.ContainerID = containerID
 
 	cfg := &types.ExecConfig{
@@ -40,28 +43,29 @@ func Exec(containerID string, Cmd ExecCmd) (execResult ExecResult, err error) {
 		AttachStderr: true,
 		AttachStdin:  true,
 	}
+
 	cfg.Cmd = Cmd.Cmd
 	response, err := cli.ContainerExecCreate(ctx, containerID, *cfg)
 
 	if err != nil {
-		err = fmt.Errorf("Error creating container exec: %v", err)
-		fmt.Println(err)
+		err = fmt.Errorf("Error in container exec ContainerExecCreate: %v", err)
 		return
 	}
 
 	execID := response.ID
 	if execID == "" {
+		err = fmt.Errorf("Error in container exec execID is empty")
 		return
 	}
-	fmt.Println(execID)
 
 	startCfg := types.ExecStartCheck{
 		Detach: cfg.Detach,
 		Tty:    cfg.Tty,
 	}
+
 	stream, err := cli.ContainerExecAttach(ctx, execID, startCfg)
 	if err != nil {
-		err = fmt.Errorf("Error attaching to container exec: %v", err)
+		err = fmt.Errorf("Error attaching to container exec ContainerExecAttach: %v", err)
 		return
 	}
 	defer stream.Close()
@@ -70,9 +74,18 @@ func Exec(containerID string, Cmd ExecCmd) (execResult ExecResult, err error) {
 
 	if c.Config.Tty {
 		_, err = io.Copy(buf, stream.Reader)
+		if err != nil {
+			err = fmt.Errorf("Error attaching to container exec io.Copy: %v", err)
+			return
+		}
 	} else {
 		_, err = stdcopy.StdCopy(buf, buf, stream.Reader)
+		if err != nil {
+			err = fmt.Errorf("Error attaching to container exec stdcopy.StdCopy: %v", err)
+			return
+		}
 	}
+
 	buf.ReadFrom(stream.Reader)
 	execResult.ExecResult = buf.String()
 	execResult.ExecCmd = Cmd

@@ -58,7 +58,7 @@ func (o *ContainerController) Exec() {
 
 	if containerID == "" {
 		o.Ctx.Output.SetStatus(400)
-		o.Data["json"] = map[string]string{"Error": "containerID can't be empty"}
+		o.Data["json"] = map[string]string{"Error": "containerID is empty"}
 		o.ServeJSON()
 		return
 	}
@@ -67,14 +67,19 @@ func (o *ContainerController) Exec() {
 	err := json.Unmarshal(o.Ctx.Input.RequestBody, &execCmd)
 	if err != nil {
 		o.Ctx.Output.SetStatus(400)
-		o.Data["json"] = map[string]string{"Error": "Exec Cmd Json format wrong"}
+		o.Data["json"] = map[string]string{"Error": "Exec Cmd Json format wrong. " + err.Error()}
 		o.ServeJSON()
 		return
 	}
 
 	fmt.Println(containerID)
 	execResult, err := models.Exec(containerID, execCmd)
-	// need to handle error
+	if err != nil {
+		o.Ctx.Output.SetStatus(400)
+		o.Data["json"] = map[string]string{"Error": "Exec Cmd Error. " + err.Error()}
+		o.ServeJSON()
+		return
+	}
 	o.Data["json"] = execResult
 	o.ServeJSON()
 	return

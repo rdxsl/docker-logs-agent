@@ -15,6 +15,23 @@ import (
 
 var Version = "version notset"
 
+func setupMTSL() (cert tls.Certificate, certpool *x509.CertPool) {
+	cert, err := tls.LoadX509KeyPair(beego.AppConfig.String("HTTPSCertFile"), beego.AppConfig.String("HTTPSKeyFile"))
+	if err != nil {
+		log.Fatalf("server: loadkeys: %s", err)
+	}
+
+	certpool = x509.NewCertPool()
+	pem, err := ioutil.ReadFile(beego.AppConfig.String("HTTPSCAFile"))
+	if err != nil {
+		log.Fatalf("Failed to read client certificate authority: %v", err)
+	}
+	if !certpool.AppendCertsFromPEM(pem) {
+		log.Fatalf("Can't parse client certificate authority")
+	}
+	return
+}
+
 func main() {
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
@@ -22,19 +39,7 @@ func main() {
 	}
 	controllers.Version = Version
 
-	cert, err := tls.LoadX509KeyPair("conf/dev/mtls/certs/server.pem", "conf/dev/mtls/certs/server.key")
-	if err != nil {
-		log.Fatalf("server: loadkeys: %s", err)
-
-	}
-	certpool := x509.NewCertPool()
-	pem, err := ioutil.ReadFile("conf/dev/mtls/certs/ca.pem")
-	if err != nil {
-		log.Fatalf("Failed to read client certificate authority: %v", err)
-	}
-	if !certpool.AppendCertsFromPEM(pem) {
-		log.Fatalf("Can't parse client certificate authority")
-	}
+	cert, certpool := setupMTSL()
 
 	config := tls.Config{
 		ClientAuth:   tls.RequireAndVerifyClientCert,
