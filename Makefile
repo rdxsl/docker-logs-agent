@@ -24,6 +24,10 @@ clean:
 
 devcert:
 	cd cicd; ./makecert.sh test@test.com
+
+prodcert:
+	cd cicd; ./makecert.sh jxie@riotgames.com ..\/conf\/production
+	
 # Run unittests
 test:
 	$(TEST_ENV_VARS) go test $(TEST_FLAGS) $(ALL_PACKAGES)

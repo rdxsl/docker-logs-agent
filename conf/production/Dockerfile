@@ -13,4 +13,5 @@ COPY conf/production/certs /go/bin/conf/certs
 
 EXPOSE 7000
 
-ENTRYPOINT ["/go/bin/docker-logs-agent"]
+# ENTRYPOINT ["/go/bin/docker-logs-agent"]
+ ENTRYPOINT ["/bin/sh"]
