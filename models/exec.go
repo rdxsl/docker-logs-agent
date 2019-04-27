@@ -24,7 +24,7 @@ type ExecResult struct {
 
 func Exec(containerID string, Cmd ExecCmd) (execResult ExecResult, err error) {
 	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
+	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("dockerApiVersion")))
 	if err != nil {
 		return
 	}

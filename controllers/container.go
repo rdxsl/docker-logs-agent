@@ -66,6 +66,7 @@ func (o *ContainerController) Exec() {
 	var execCmd models.ExecCmd
 	err := json.Unmarshal(o.Ctx.Input.RequestBody, &execCmd)
 	if err != nil {
+		fmt.Println(o.Ctx.Input.RequestBody)
 		o.Ctx.Output.SetStatus(400)
 		o.Data["json"] = map[string]string{"Error": "Exec Cmd Json format wrong. " + err.Error()}
 		o.ServeJSON()

@@ -12,7 +12,7 @@ type MainController struct {
 
 func (this *MainController) Get() {
 	VersionJson := map[string]string{"docker-logs-agent": Version}
-	VersionJson["docker-api"] = beego.AppConfig.String("docker_api_version")
+	VersionJson["docker-api"] = beego.AppConfig.String("dockerApiVersion")
 	this.Data["json"] = VersionJson
 	this.ServeJSON()
 }

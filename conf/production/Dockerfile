@@ -11,6 +11,6 @@ COPY conf/production/app_prod.conf /go/bin/conf/app.conf
 
 COPY conf/production/certs /go/bin/conf/certs
 
-EXPOSE 7000
+EXPOSE 7001:7002
 
 ENTRYPOINT ["/go/bin/docker-logs-agent"]

@@ -11,6 +11,9 @@ COPY conf/production/app_debug.conf /go/bin/conf/app.conf
 
 COPY conf/production/certs /go/bin/conf/certs
 
-EXPOSE 7000
+RUN apk --no-cache add curl
 
-ENTRYPOINT ["/go/bin/docker-logs-agent"]
+
+COPY conf/production/docker-logs-agent.tgz /
+
+EXPOSE 7001:7002

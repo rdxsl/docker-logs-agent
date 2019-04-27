@@ -27,7 +27,7 @@ func GetLog(containerID string, tail string) (Logs, error) {
 func dockerContainerLogs(containerID string, tail string) (Logs, error) {
 	var l Logs
 	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
+	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("dockerApiVersion")))
 	if err != nil {
 		return l, err
 	}
