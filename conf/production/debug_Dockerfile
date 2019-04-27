@@ -1,0 +1,16 @@
+# start from golang
+FROM golang
+MAINTAINER Jack Xie <jxie@riotgames.com>
+
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+
+COPY bin/linux/amd64/docker-logs-agent /go/bin/docker-logs-agent
+RUN chown guest:users /go/bin/docker-logs-agent
+
+COPY conf/production/app_debug.conf /go/bin/conf/app.conf
+
+COPY conf/production/certs /go/bin/conf/certs
+
+EXPOSE 7000
+
+ENTRYPOINT ["/go/bin/docker-logs-agent"]
