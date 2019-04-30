@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	cert, err := tls.LoadX509KeyPair("/Users/jxie/Development/gocode/src/github.com/rdxsl/docker-logs-agent/conf/dev/mtls/certs/client.pem", "/Users/jxie/Development/gocode/src/github.com/rdxsl/docker-logs-agent/conf/dev/mtls/certs/client.key")
+	cert, err := tls.LoadX509KeyPair("/Users/jxie/Development/gocode/src/github.com/rdxsl/docker-agent-proxy/conf/dev/mtls/certs/client.pem", "/Users/jxie/Development/gocode/src/github.com/rdxsl/docker-logs-agent/conf/dev/mtls/certs/client.key")
 	if err != nil {
 		log.Fatalf("server: loadkeys: %s", err)
 	}

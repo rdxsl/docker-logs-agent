@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/astaxie/beego"
-	"github.com/rdxsl/docker-logs-agent/models"
+	"github.com/rdxsl/docker-agent-proxy/models"
 )
 
 // Operations about Container

@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/rdxsl/docker-logs-agent/controllers"
-	_ "github.com/rdxsl/docker-logs-agent/routers"
+	"github.com/rdxsl/docker-agent-proxy/controllers"
+	_ "github.com/rdxsl/docker-agent-proxy/routers"
 
 	"github.com/astaxie/beego"
 )

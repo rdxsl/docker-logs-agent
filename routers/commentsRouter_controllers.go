@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-    beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"] = append(beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"],
+    beego.GlobalControllerRouter["github.com/rdxsl/docker-agent-proxy/controllers:ContainerController"] = append(beego.GlobalControllerRouter["github.com/rdxsl/docker-agent-proxy/controllers:ContainerController"],
         beego.ControllerComments{
             Method: "Exec",
             Router: `/:containerID/exec`,
@@ -16,7 +16,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"] = append(beego.GlobalControllerRouter["github.com/rdxsl/docker-logs-agent/controllers:ContainerController"],
+    beego.GlobalControllerRouter["github.com/rdxsl/docker-agent-proxy/controllers:ContainerController"] = append(beego.GlobalControllerRouter["github.com/rdxsl/docker-agent-proxy/controllers:ContainerController"],
         beego.ControllerComments{
             Method: "Get",
             Router: `/:containerID/logs/?tail=`,

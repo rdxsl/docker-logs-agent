@@ -1,5 +1,5 @@
 
-BINARY := docker-logs-agent
+BINARY := docker-agent-proxy
 
 UNIX_EXECUTABLES := \
 	darwin/amd64/$(BINARY) \
@@ -9,7 +9,7 @@ ALL_EXECUTABLES := $(UNIX_EXECUTABLES:%=bin/%)
 
 GOFILES := $(shell git ls-files | egrep \.go$ | egrep -v ^vendor/ | egrep -v _test.go$)
 
-DOCKER_IMAGE := rdxsl/docker-logs-agent
+DOCKER_IMAGE := rdxsl/${BINARY}
 
 DOCKER_REGISTRY := ${DOCKER_REGISTRY}
 

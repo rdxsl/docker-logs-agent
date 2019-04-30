@@ -1,5 +1,5 @@
 // @APIVersion 1.0.0
-// @Title docker-logs-agent
+// @Title docker-agent-proxy
 // @Description Web wrapper to access docker logs via unix socket `/var/run/docker.sock`. Only use this in a secure network environment.
 // @Contact jxie@riotgames.com
 // @License Apache 2.0
@@ -7,7 +7,7 @@
 package routers
 
 import (
-	"github.com/rdxsl/docker-logs-agent/controllers"
+	"github.com/rdxsl/docker-agent-proxy/controllers"
 
 	"github.com/astaxie/beego"
 )

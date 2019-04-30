@@ -4,16 +4,13 @@ MAINTAINER Jack Xie <jxie@riotgames.com>
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-COPY bin/linux/amd64/docker-logs-agent /go/bin/docker-logs-agent
-RUN chown guest:users /go/bin/docker-logs-agent
+COPY bin/linux/amd64/docker-agent-proxy /go/bin/docker-agent-proxy
+RUN chown guest:users /go/bin/docker-agent-proxy
 
 COPY conf/production/app_debug.conf /go/bin/conf/app.conf
 
 COPY conf/production/certs /go/bin/conf/certs
 
 RUN apk --no-cache add curl
-
-
-COPY conf/production/docker-logs-agent.tgz /
 
 EXPOSE 7001:7002

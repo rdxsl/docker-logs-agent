@@ -1,4 +1,4 @@
-# docker-logs-agent
+# docker-agent-proxy
 
 Web wrapper to access docker logs via unix socket `/var/run/docker.sock`. Secured via client side tls certs.
 
