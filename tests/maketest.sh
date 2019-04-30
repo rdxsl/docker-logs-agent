@@ -5,8 +5,8 @@ if [ "$1" == "" ]; then
 fi
 VERSION=$1
 
-#docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
-#   --name docker-logs-agent-test-${VERSION} rdxsl/docker-logs-agent:${VERSION}
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
+   --name docker-logs-agent-test-${VERSION} rdxsl/docker-logs-agent:${VERSION}
 
 sleep 3
 
@@ -44,4 +44,4 @@ else
   echo "BAD cert log test to https port 7002 PASSED."
 fi
 
-#docker rm -f docker-logs-agent-test-${VERSION}
+docker rm -f docker-logs-agent-test-${VERSION}
