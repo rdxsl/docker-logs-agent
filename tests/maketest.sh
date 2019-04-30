@@ -5,8 +5,10 @@ if [ "$1" == "" ]; then
 fi
 VERSION=$1
 
-docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
-   --name docker-logs-agent-test-${VERSION} rdxsl/docker-logs-agent:${VERSION}
+#docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
+#   --name docker-logs-agent-test-${VERSION} rdxsl/docker-logs-agent:${VERSION}
+
+sleep 3
 
 statusCode=$(curl --write-out %{http_code} --silent --output /dev/null -X GET "http://localhost:7001/v1/containers/docker-logs-agent-test-${VERSION}/logs/?tail=5" -H  "accept: application/json")
 if [ $statusCode != 200 ]; then
@@ -24,7 +26,7 @@ else
   echo "log test to https port 7002 PASSED."
 fi
 
-statusCode=$(curl --write-out %{http_code} --silent --output /dev/null  --key conf/production/certs/client.key --cert conf/production/certs/client.pem -k -i -X POST "https://localhost:7002/v1/containers/docker-logs-agent-test-1.1-10-g2c78bdd/exec" -H  "accept: application/json" -H  "content-type: application/json" -d "{\"Cmd\":[\"ls\",\"/bin\"]}"   )
+statusCode=$(curl --write-out %{http_code} --silent --output /dev/null  --key conf/production/certs/client.key --cert conf/production/certs/client.pem -k -i -X POST "https://localhost:7002/v1/containers/docker-logs-agent-test-${VERSION}/exec" -H  "accept: application/json" -H  "content-type: application/json" -d "{\"Cmd\":[\"ls\",\"/bin\"]}"   )
 if [ $statusCode != 200 ]; then
   echo "Can't run the exec test to https port 7002, please check! status=$statusCode"
   exit 1
@@ -42,4 +44,4 @@ else
   echo "BAD cert log test to https port 7002 PASSED."
 fi
 
-docker rm -f docker-logs-agent-test-${VERSION}
+#docker rm -f docker-logs-agent-test-${VERSION}

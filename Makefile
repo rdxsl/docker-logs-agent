@@ -30,7 +30,7 @@ prodcert:
 
 # Run unittests
 test: docker_image
-	cd tests; bash maketest.sh $(APP_VERSION)
+	bash tests/maketest.sh $(APP_VERSION)
 
 # Run unittests with race condition detector on (takes longer)
 testwithrace:
