@@ -17,6 +17,9 @@ APP_VERSION ?= $(shell git describe --long)
 
 all: clean test build
 
+init:
+	cd cicd; bash makecert.sh test@github.com
+	
 build: clean $(ALL_EXECUTABLES)
 
 clean:

@@ -11,6 +11,7 @@ fi
 EMAIL=$1
 
 CERTPATH="../conf/dev"
+mkdir -p $CERTPATH
 
 if [ "$2" != "" ]; then
     echo "Need email as argument"

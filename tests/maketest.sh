@@ -5,8 +5,8 @@ if [ "$1" == "" ]; then
 fi
 VERSION=$1
 
-#docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
-#   --name docker-agent-proxy-test-${VERSION} rdxsl/docker-agent-proxy:${VERSION}
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
+   --name docker-agent-proxy-test-${VERSION} rdxsl/docker-agent-proxy:${VERSION}
 
 #sleep 3
 
