@@ -1,6 +1,5 @@
 # start from golang
 FROM golang:alpine
-MAINTAINER 
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
