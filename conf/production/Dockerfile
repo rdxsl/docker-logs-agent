@@ -9,7 +9,9 @@ RUN chown guest:users /go/bin/docker-agent-proxy
 
 COPY conf/production/app_prod.conf /go/bin/conf/app.conf
 
-COPY conf/production/certs /go/bin/conf/certs
+COPY conf/production/certs/server.pem /go/bin/conf/certs/server.pem
+COPY conf/production/certs/server.key /go/bin/conf/certs/server.key
+COPY conf/production/certs/ca.pem /go/bin/conf/certs/ca.pem
 
 EXPOSE 7001:7002
 
