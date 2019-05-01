@@ -8,9 +8,6 @@ VERSION=$1
 docker run -d -v /var/run/docker.sock:/var/run/docker.sock  -p 7001:7001 -p 7002:7002 \
    --name docker-agent-proxy-test-${VERSION} rdxsl/docker-agent-proxy:${VERSION}
 
-#sleep 3
-
-echo curl --write-out %{http_code} --silent --output /dev/null -X GET "http://localhost:7001/v1/containers/docker-agent-proxy-test-${VERSION}/logs/?tail=5" -H  "accept: application/json"
 statusCode=$(curl --write-out %{http_code} --silent --output /dev/null -X GET "http://localhost:7001/v1/containers/docker-agent-proxy-test-${VERSION}/logs/?tail=5" -H  "accept: application/json")
 if [ $statusCode != 200 ]; then
   echo "Can't run the log test to http port 7001, please check! status=$statusCode"
