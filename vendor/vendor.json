@@ -948,8 +948,8 @@
 		{
 			"checksumSHA1": "wfrPV0iupbyLWIUOUeSnVaHHIHg=",
 			"path": "github.com/docker/docker/api/types/container",
-			"revision": "639880e6eb657187938376aea992e7870fb71227",
-			"revisionTime": "2019-03-26T19:24:29Z"
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
 		},
 		{
 			"checksumSHA1": "fF+hqcXRnyL/ZeDFP7b5HSa734Q=",
