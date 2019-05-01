@@ -29,7 +29,7 @@ devcert:
 	cd cicd; ./makecert.sh test@test.com
 
 prodcert:
-	cd cicd; ./makecert.sh jxie@riotgames.com ..\/conf\/production
+	cd cicd; ./makecert.sh test@test.com ..\/conf\/production
 
 # Run unittests
 test: docker_image
