@@ -54,6 +54,6 @@ prod_docker_image: build bin/linux/amd64/$(BINARY)
 docker_debug_image: build bin/linux/amd64/$(BINARY) prodcert
 	docker build -t $(DOCKER_IMAGE):$(APP_VERSION) -f conf/production/debug_Dockerfile .
 
-docker_release: docker_image
+docker_release: prod_docker_image
 	docker tag $(DOCKER_IMAGE):$(APP_VERSION) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE):$(APP_VERSION)
 	docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE):$(APP_VERSION)
