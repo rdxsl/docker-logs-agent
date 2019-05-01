@@ -48,6 +48,9 @@ bin/linux/amd64/$(BINARY): $(GOFILES)
 docker_image: build bin/linux/amd64/$(BINARY) prodcert
 	docker build -t $(DOCKER_IMAGE):$(APP_VERSION) -f conf/production/Dockerfile .
 
+prod_docker_image: build bin/linux/amd64/$(BINARY)
+	docker build -t $(DOCKER_IMAGE):$(APP_VERSION) -f conf/production/Dockerfile .
+
 docker_debug_image: build bin/linux/amd64/$(BINARY) prodcert
 	docker build -t $(DOCKER_IMAGE):$(APP_VERSION) -f conf/production/debug_Dockerfile .
 
