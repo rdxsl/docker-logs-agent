@@ -19,7 +19,7 @@ all: clean test build
 
 init:
 	cd cicd; bash makecert.sh test@github.com
-	
+
 build: clean $(ALL_EXECUTABLES)
 
 clean:
@@ -38,7 +38,6 @@ test: docker_image
 # Run unittests with race condition detector on (takes longer)
 testwithrace:
 	$(TEST_ENV_VARS) go test $(TEST_FLAGS) -race $(ALL_PACKAGES)
-
 
 bin/darwin/amd64/$(BINARY): $(GOFILES)
 	CGO_ENABLED=0 GOARCH=amd64 GOOS=darwin go build -a -installsuffix cgo  -ldflags="-w -s" -ldflags="-X main.Version=$(APP_VERSION)" -o "$@" main.go
