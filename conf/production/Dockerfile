@@ -1,6 +1,6 @@
 # start from alpine
 FROM alpine
-MAINTAINER Jack Xie <jxie@riotgames.com>
+MAINTAINER 
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
