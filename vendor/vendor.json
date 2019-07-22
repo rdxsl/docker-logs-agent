@@ -948,8 +948,8 @@
 		{
 			"checksumSHA1": "wfrPV0iupbyLWIUOUeSnVaHHIHg=",
 			"path": "github.com/docker/docker/api/types/container",
-			"revision": "639880e6eb657187938376aea992e7870fb71227",
-			"revisionTime": "2019-03-26T19:24:29Z"
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
 		},
 		{
 			"checksumSHA1": "fF+hqcXRnyL/ZeDFP7b5HSa734Q=",
@@ -1076,6 +1076,12 @@
 			"path": "github.com/docker/docker/pkg/mount",
 			"revision": "2432af701a7973ea582196b4b9488831156f3458",
 			"revisionTime": "2019-04-16T18:48:43Z"
+		},
+		{
+			"checksumSHA1": "w0waeTRJ1sFygI0dZXH6l9E1c60=",
+			"path": "github.com/docker/docker/pkg/stdcopy",
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
 		},
 		{
 			"checksumSHA1": "gAUCA6R7F9kObegRGGNX5PzJahE=",
@@ -1302,11 +1308,17 @@
 			"revisionTime": "2019-04-16T18:48:43Z"
 		},
 		{
-			"checksumSHA1": "KXyl/EG8mbFrX5XARQyv34FdOug=",
+			"checksumSHA1": "cIiyvAduLLFvu+tg1Qr5Jw3jeWo=",
+			"path": "github.com/jtolds/gls",
+			"revision": "b4936e06046bbecbb94cae9c18127ebe510a2cb9",
+			"revisionTime": "2018-11-10T20:28:10Z"
+		},
+		{
+			"checksumSHA1": "uKoo85DVwvdZLliXjWmHuOoof5M=",
 			"origin": "github.com/docker/docker/vendor/github.com/konsorten/go-windows-terminal-sequences",
 			"path": "github.com/konsorten/go-windows-terminal-sequences",
-			"revision": "639880e6eb657187938376aea992e7870fb71227",
-			"revisionTime": "2019-03-26T19:24:29Z"
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
 		},
 		{
 			"checksumSHA1": "aodj/cITRyuaZSh84DDhrZjh76U=",
@@ -1469,11 +1481,53 @@
 			"revisionTime": "2015-11-19T15:19:21Z"
 		},
 		{
-			"checksumSHA1": "C7uEF+3MjOMmKRK5LhoUBikJIhE=",
+			"checksumSHA1": "Tx+N13P+lGKgx5LXb2FcNkezzvU=",
 			"origin": "github.com/docker/docker/vendor/github.com/sirupsen/logrus",
 			"path": "github.com/sirupsen/logrus",
-			"revision": "639880e6eb657187938376aea992e7870fb71227",
-			"revisionTime": "2019-03-26T19:24:29Z"
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
+		},
+		{
+			"checksumSHA1": "8M5kk6pT2gknOtearzxw7gagVCM=",
+			"path": "github.com/smartystreets/assertions",
+			"revision": "f487f9de1cd36ebab28235b9373028812fb47cbd",
+			"revisionTime": "2019-04-01T21:17:40Z"
+		},
+		{
+			"checksumSHA1": "a0CRqejGZH1LxO4G/DZsux7ULWA=",
+			"path": "github.com/smartystreets/assertions/internal/go-diff/diffmatchpatch",
+			"revision": "f487f9de1cd36ebab28235b9373028812fb47cbd",
+			"revisionTime": "2019-04-01T21:17:40Z"
+		},
+		{
+			"checksumSHA1": "v6W3GIQMzr3QSXB2NtBa9X7SwiI=",
+			"path": "github.com/smartystreets/assertions/internal/go-render/render",
+			"revision": "f487f9de1cd36ebab28235b9373028812fb47cbd",
+			"revisionTime": "2019-04-01T21:17:40Z"
+		},
+		{
+			"checksumSHA1": "r6FauVdOTFnwYQgrKGFuWUbIAJE=",
+			"path": "github.com/smartystreets/assertions/internal/oglematchers",
+			"revision": "f487f9de1cd36ebab28235b9373028812fb47cbd",
+			"revisionTime": "2019-04-01T21:17:40Z"
+		},
+		{
+			"checksumSHA1": "fzTuiT5s2hzKZ/EYS9zMx8ztsXE=",
+			"path": "github.com/smartystreets/goconvey/convey",
+			"revision": "68dc04aab96ae4326137d6b77330c224063a927e",
+			"revisionTime": "2019-03-30T03:26:15Z"
+		},
+		{
+			"checksumSHA1": "6Mgn4H/4vpqYGlaIKZ0UwOmJN0E=",
+			"path": "github.com/smartystreets/goconvey/convey/gotest",
+			"revision": "68dc04aab96ae4326137d6b77330c224063a927e",
+			"revisionTime": "2019-03-30T03:26:15Z"
+		},
+		{
+			"checksumSHA1": "/8sed9aZQ9B7D0cBhH3OhvS2fAk=",
+			"path": "github.com/smartystreets/goconvey/convey/reporting",
+			"revision": "68dc04aab96ae4326137d6b77330c224063a927e",
+			"revisionTime": "2019-03-30T03:26:15Z"
 		},
 		{
 			"checksumSHA1": "pGeS0bs3N42WTYkeEWQicStFenQ=",
@@ -1720,11 +1774,11 @@
 			"revisionTime": "2019-04-16T18:48:43Z"
 		},
 		{
-			"checksumSHA1": "OhhhFbhQACZ94tA3fT88F5+1L+U=",
+			"checksumSHA1": "Nn9pKHmFBqF3+t3kE0clwWW27Rw=",
 			"origin": "github.com/docker/docker/vendor/golang.org/x/sys/unix",
 			"path": "golang.org/x/sys/unix",
-			"revision": "639880e6eb657187938376aea992e7870fb71227",
-			"revisionTime": "2019-03-26T19:24:29Z"
+			"revision": "ed07e1152879a4d156dff2e86abca3c4c811e743",
+			"revisionTime": "2019-04-12T20:50:16Z"
 		},
 		{
 			"checksumSHA1": "Hu8GoQK1euwtE4UjrhXepmk2NM8=",
@@ -2623,5 +2677,5 @@
 			"revisionTime": "2019-04-16T18:48:43Z"
 		}
 	],
-	"rootPath": "github.com/rdxsl/docker-logs-agent"
+	"rootPath": "github.com/rdxsl/docker-agent-proxy"
 }

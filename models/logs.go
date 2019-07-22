@@ -12,18 +12,12 @@ import (
 )
 
 type Logs struct {
-	ContainerLog       containerLog       `json:"containerLog"`
-	Base64ContainerLog base64ContainerLog `json:"base64ContainerLog"`
+	ContainerLog containerLog `json:"containerLog"`
 }
 
 type containerLog struct {
 	ContainerID string `json:"containerID"`
 	Logs        string `json:"Logs"`
-}
-
-type base64ContainerLog struct {
-	Base64containerID string `json:"base64containerID"`
-	Base64Logs        []byte `json:"base64Logs"`
 }
 
 func GetLog(containerID string, tail string) (Logs, error) {
@@ -33,7 +27,7 @@ func GetLog(containerID string, tail string) (Logs, error) {
 func dockerContainerLogs(containerID string, tail string) (Logs, error) {
 	var l Logs
 	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("docker_api_version")))
+	cli, err := client.NewClientWithOpts(client.WithVersion(beego.AppConfig.String("dockerApiVersion")))
 	if err != nil {
 		return l, err
 	}

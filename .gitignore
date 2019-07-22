@@ -1,5 +1,7 @@
-docker-logs-agent
+docker-agent-proxy
 debug
 bin
 swagger/*
 lastupdate.tmp
+conf/dev/certs/*
+conf/production/certs/*
